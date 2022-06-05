@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ShopUnitService {
@@ -16,5 +18,17 @@ public class ShopUnitService {
 
     public void saveAll(List<ShopUnit> items) {
         shopUnitRepository.saveAll(items);
+    }
+
+    public ShopUnit findById(UUID id) {
+        List<ShopUnit> children = shopUnitRepository.findAllChildrenById(id);
+        if (children.isEmpty()) children = null;
+        Optional<ShopUnit> unit = shopUnitRepository.findById(id);
+        if (unit.isEmpty()) return null;
+        else {
+            ShopUnit shopUnit = unit.get();
+            shopUnit.setChildren(children);
+            return shopUnit;
+        }
     }
 }

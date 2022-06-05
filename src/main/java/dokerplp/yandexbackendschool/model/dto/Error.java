@@ -14,8 +14,8 @@ public class Error implements Response {
     private long code;
     private String message;
 
-    public Error(HttpStatus status) {
+    public Error(HttpStatus status, String msg) {
         this.code = status.value();
-        this.message = status.name();
+        this.message = msg;
     }
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.springframework.data.jpa.repository.Query;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -47,16 +48,7 @@ public class ShopUnit {
     @Column(name = "PRICE")
     protected Long price;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.ALL})
-    @JoinTable(
-            name = "SHOPUNITCHILDREN",
-            joinColumns = {
-                    @JoinColumn(name = "CHILDID")
-            },
-            inverseJoinColumns = {
-                    @JoinColumn(name = "PARENTID")
-            }
-    )
+    @Transient
     protected List<ShopUnit> children;
 
     public static class ShopUnitFactory {
@@ -78,7 +70,7 @@ public class ShopUnit {
         }
 
         public ShopUnitFactory setParentId(UUID parentId) {
-            shopUnit.setId(parentId);
+            shopUnit.setParentId(parentId);
             return this;
         }
 
