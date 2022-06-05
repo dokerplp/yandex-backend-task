@@ -1,4 +1,4 @@
-package dokerplp.yandexbackendschool.model.dto;
+package dokerplp.yandexbackendschool.model.httpDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

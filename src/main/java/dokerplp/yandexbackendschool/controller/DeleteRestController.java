@@ -1,8 +1,6 @@
 package dokerplp.yandexbackendschool.controller;
 
-import dokerplp.yandexbackendschool.model.dto.*;
 import dokerplp.yandexbackendschool.model.httpDto.HttpDto;
-import dokerplp.yandexbackendschool.model.httpDto.Ok;
 import dokerplp.yandexbackendschool.model.httpDto.Response;
 import dokerplp.yandexbackendschool.model.service.ShopUnitService;
 import org.slf4j.Logger;
@@ -14,23 +12,29 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.stream.Collectors;
+import java.util.UUID;
 
 @RestController
-public class ImportsRestController {
-    private final Logger logger = LoggerFactory.getLogger(ImportsRestController.class);
+public class DeleteRestController {
+
+    private final Logger logger = LoggerFactory.getLogger(DeleteRestController.class);
+
     @Autowired
     private ShopUnitService shopUnitService;
 
-    @PostMapping("/imports")
+    @GetMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Response imports(@RequestBody ShopUnitImportRequest shopUnitImportRequest) {
-        shopUnitService.saveAll(shopUnitImportRequest.getItems().stream()
-                .map((f) -> f.toShopUnit(shopUnitImportRequest.getUpdateDate()))
-                .collect(Collectors.toList()));
-        return new Ok();
+    public Response deleteById(@PathVariable UUID id) {
+        if (shopUnitService.deleteById(id) == null)
+            return HttpDto.NOT_FOUND.getResponse();
+        return HttpDto.OK.getResponse();
     }
 
+//    @ExceptionHandler({
+//            DataIntegrityViolationException.class,
+//            HttpMessageNotReadableException.class,
+//            JpaSystemException.class
+//    })
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Response handleBadRequestException(Exception e) {

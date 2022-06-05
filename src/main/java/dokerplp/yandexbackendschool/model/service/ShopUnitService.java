@@ -31,4 +31,12 @@ public class ShopUnitService {
             return shopUnit;
         }
     }
+
+    public ShopUnit deleteById(UUID id) {
+        ShopUnit unit = findById(id);
+        if (unit == null) return null;
+        shopUnitRepository.deleteById(id);
+        shopUnitRepository.deleteAllChildrenById(id);
+        return unit;
+    }
 }
