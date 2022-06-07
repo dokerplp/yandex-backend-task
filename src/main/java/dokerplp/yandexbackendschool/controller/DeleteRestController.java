@@ -20,7 +20,7 @@ public class DeleteRestController {
 
     @GetMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public IResponse deleteById(@PathVariable UUID id) {
+    public IResponse delete(@PathVariable UUID id) {
         if (shopUnitService.deleteById(id) == null) throw new NotFoundException();
         return Response.OK.getResponse();
     }

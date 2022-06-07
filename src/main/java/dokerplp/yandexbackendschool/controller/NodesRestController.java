@@ -22,7 +22,7 @@ public class NodesRestController {
 
     @GetMapping("/nodes/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ShopUnit deleteById(@PathVariable UUID id) {
+    public ShopUnit nodes(@PathVariable UUID id) {
         ShopUnit unit = shopUnitService.findById(id);
         if (unit == null) throw new NotFoundException();
         return unit;

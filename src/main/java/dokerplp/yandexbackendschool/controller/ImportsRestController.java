@@ -1,6 +1,7 @@
 package dokerplp.yandexbackendschool.controller;
 
 import dokerplp.yandexbackendschool.dto.ShopUnitImportRequest;
+import dokerplp.yandexbackendschool.model.entity.ShopUnit;
 import dokerplp.yandexbackendschool.responses.Response;
 import dokerplp.yandexbackendschool.responses.Ok;
 import dokerplp.yandexbackendschool.responses.IResponse;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,9 +25,13 @@ public class ImportsRestController {
     @PostMapping("/imports")
     @ResponseStatus(HttpStatus.OK)
     public IResponse imports(@RequestBody ShopUnitImportRequest shopUnitImportRequest) {
-        shopUnitService.saveAll(shopUnitImportRequest.getItems().stream()
-                .map((f) -> f.toShopUnit(shopUnitImportRequest.getUpdateDate()))
-                .collect(Collectors.toList()));
+        LocalDateTime date = shopUnitImportRequest.getUpdateDate();
+        List<ShopUnit> items = shopUnitImportRequest.getItems().stream()
+                .map((e) -> e.toShopUnit(date))
+                .collect(Collectors.toList());
+
+        shopUnitService.saveAll(items, date);
+
         return Response.OK.getResponse();
     }
 
