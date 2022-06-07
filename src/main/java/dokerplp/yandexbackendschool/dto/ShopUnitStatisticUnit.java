@@ -1,4 +1,4 @@
-package dokerplp.yandexbackendschool.model.dto;
+package dokerplp.yandexbackendschool.dto;
 
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
 import lombok.AllArgsConstructor;

@@ -1,4 +1,4 @@
-package dokerplp.yandexbackendschool.model.httpDto;
+package dokerplp.yandexbackendschool.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Error implements Response {
+public class Error implements IResponse {
     private long code;
     private String message;
 

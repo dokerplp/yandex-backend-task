@@ -1,4 +1,4 @@
-package dokerplp.yandexbackendschool.model.dto;
+package dokerplp.yandexbackendschool.dto;
 
 import dokerplp.yandexbackendschool.model.entity.ShopUnit;
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
@@ -20,7 +20,7 @@ public class ShopUnitImport {
     private Long price;
 
     public ShopUnit toShopUnit(LocalDateTime date) {
-        return new ShopUnit.ShopUnitFactory()
+        return new ShopUnit.ShopUnitBuilder()
                 .setId(id)
                 .setName(name)
                 .setParentId(parentId)

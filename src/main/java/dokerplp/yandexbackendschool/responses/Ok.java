@@ -1,4 +1,4 @@
-package dokerplp.yandexbackendschool.model.httpDto;
+package dokerplp.yandexbackendschool.responses;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Ok implements Response {
+public class Ok implements IResponse {
     private long code = 200;
 }
