@@ -18,10 +18,11 @@ public class DeleteRestController {
     @Autowired
     private ShopUnitService shopUnitService;
 
-    @GetMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public IResponse delete(@PathVariable UUID id) {
-        if (shopUnitService.deleteById(id) == null) throw new NotFoundException();
+        if (shopUnitService.deleteById(id) == null)
+            throw new NotFoundException();
         return Response.OK.getResponse();
     }
 

@@ -50,9 +50,11 @@ public class ShopUnit {
 
     @Transient
     private List<ShopUnit> children;
-    @Transient
+
     @JsonIgnore
+    @Transient
     private long total;
+
     @JsonIgnore
     @Transient
     private long amount;

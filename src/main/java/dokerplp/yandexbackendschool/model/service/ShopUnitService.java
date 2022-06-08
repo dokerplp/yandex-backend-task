@@ -66,10 +66,14 @@ public class ShopUnitService {
     }
 
     public ShopUnit deleteById(UUID id) {
-        ShopUnit unit = findById(id);
-        if (unit == null) return null;
-        shopUnitRepository.deleteAllChildrenById(id);
-        shopUnitRepository.deleteById(id);
+        Optional<ShopUnit> optional = shopUnitRepository.findById(id);
+        if (optional.isEmpty()) return null;
+        ShopUnit unit = optional.get();
+
+        List<ShopUnit> children = shopUnitRepository.findAllChildrenById(id);
+        children.forEach((e) -> deleteById(e.getId()));
+
+        shopUnitRepository.deleteById(unit.getId());
         return unit;
     }
 }
