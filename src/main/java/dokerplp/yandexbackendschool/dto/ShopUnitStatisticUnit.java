@@ -1,8 +1,10 @@
 package dokerplp.yandexbackendschool.dto;
 
+import dokerplp.yandexbackendschool.model.entity.ShopUnit;
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
@@ -10,6 +12,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class ShopUnitStatisticUnit {
     private UUID id;
@@ -18,4 +21,15 @@ public class ShopUnitStatisticUnit {
     private ShopUnitType type;
     private Long price;
     private LocalDateTime date;
+
+    public static ShopUnitStatisticUnit fromShopUnit(ShopUnit unit) {
+        ShopUnitStatisticUnit susu = new ShopUnitStatisticUnit();
+        susu.id = unit.getId();
+        susu.name = unit.getName();
+        susu.parentId = unit.getParentId();
+        susu.type = unit.getType();
+        susu.price = unit.getPrice();
+        susu.date = unit.getDate();
+        return susu;
+    }
 }

@@ -76,4 +76,8 @@ public class ShopUnitService {
         shopUnitRepository.deleteById(unit.getId());
         return unit;
     }
+
+    public List<ShopUnit> findAllSalesByDate(LocalDateTime end) {
+        return shopUnitRepository.findAllSalesByDate(end.minusDays(1), end);
+    }
 }
