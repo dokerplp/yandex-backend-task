@@ -1,6 +1,7 @@
 package dokerplp.yandexbackendschool.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dokerplp.yandexbackendschool.util.ShopUnitTypeConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,28 +28,34 @@ import java.util.UUID;
 public class ShopUnit {
     @Id
     @Column(name = "ID", nullable = false)
-    protected UUID id;
+    private UUID id;
 
     @Column(name = "NAME", nullable = false)
-    protected String name;
+    private String name;
 
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     @Column(name = "DATE", nullable = false)
-    protected LocalDateTime date;
+    private LocalDateTime date;
 
     @Column(name = "PARENTID")
-    protected UUID parentId;
+    private UUID parentId;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "TYPE", nullable = false)
     @Type(type = "SHOPUNITTYPE")
-    protected ShopUnitType type;
+    private ShopUnitType type;
 
     @Column(name = "PRICE")
-    protected Long price;
+    private Long price;
 
     @Transient
-    protected List<ShopUnit> children;
+    private List<ShopUnit> children;
+    @Transient
+    @JsonIgnore
+    private long total;
+    @JsonIgnore
+    @Transient
+    private long amount;
 
     public static class ShopUnitBuilder {
         private final ShopUnit shopUnit = new ShopUnit();

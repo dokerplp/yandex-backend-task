@@ -1,16 +1,14 @@
 package dokerplp.yandexbackendschool.model.service;
 
-import dokerplp.yandexbackendschool.dto.ShopUnitImportRequest;
-import dokerplp.yandexbackendschool.exception.BadRequestException;
 import dokerplp.yandexbackendschool.model.entity.ShopUnit;
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
 import dokerplp.yandexbackendschool.model.repository.ShopUnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,56 +17,52 @@ public class ShopUnitService {
     private ShopUnitRepository shopUnitRepository;
 
     public void saveAll(List<ShopUnit> items, LocalDateTime dateTime) {
+        shopUnitRepository.saveAll(items);
+
+        Set<ShopUnit> units = new HashSet<>();
         for (ShopUnit unit : items) {
             if (unit.getParentId() == null) continue;
             Optional<ShopUnit> parent = shopUnitRepository.findById(unit.getParentId());
-            if (parent.isPresent() && parent.get().getType() == ShopUnitType.OFFER)
-                throw new BadRequestException();
-            shopUnitRepository.save(unit);
+            while (parent.isPresent()) {
+                units.add(parent.get());
+                if (parent.get().getParentId() == null) break;
+                parent = shopUnitRepository.findById(parent.get().getParentId());
+            }
         }
-        items.forEach((u) -> updateDate(u, dateTime));
-    }
 
-    private void updateDate(ShopUnit item, LocalDateTime dateTime) {
-        item.setDate(dateTime);
-        shopUnitRepository.save(item);
-        if (item.getParentId() != null) {
-            Optional<ShopUnit> parent = shopUnitRepository.findById(item.getParentId());
-            parent.ifPresent(shopUnit -> updateDate(shopUnit, dateTime));
-        }
-    }
-
-    private Pair<Long, Long> getSum(ShopUnit item) {
-        if (item.getType() == ShopUnitType.OFFER) return Pair.of(item.getPrice(), 1L);
-
-        List<ShopUnit> children = shopUnitRepository.findAllChildrenById(item.getId());
-        if (children == null || children.isEmpty()) return Pair.of(0L, 0L);
-
-        Pair<Long, Long> sum = Pair.of(0L, 0L);
-        for (ShopUnit unit : children){
-            Pair<Long, Long> child = getSum(unit);
-            sum = Pair.of(sum.getFirst() + child.getFirst(), sum.getSecond() + child.getSecond());
-        }
-        return sum;
-    }
-
-    private long getPrice(ShopUnit item) {
-        Pair<Long, Long> sum = getSum(item);
-        return sum.getFirst() / sum.getSecond();
+        units.forEach((e) -> e.setDate(dateTime));
+        shopUnitRepository.saveAll(units);
     }
 
     public ShopUnit findById(UUID id) {
-        Optional<ShopUnit> unit = shopUnitRepository.findById(id);
-        if (unit.isEmpty()) return null;
-        unit.get().setPrice(getPrice(unit.get()));
+        Optional<ShopUnit> optional = shopUnitRepository.findById(id);
+        if (optional.isEmpty()) return null;
+        ShopUnit unit = optional.get();
 
-        List<ShopUnit> children = shopUnitRepository.findAllChildrenById(id);
-        if (children.isEmpty()) unit.get().setChildren(null);
-        else unit.get().setChildren(
-                children.stream()
-                        .map((c) -> findById(c.getId()))
-                        .collect(Collectors.toList()));
-        return unit.get();
+        if (unit.getType() != ShopUnitType.CATEGORY) {
+            unit.setTotal(unit.getPrice());
+            unit.setAmount(1);
+            return unit;
+        }
+
+        AtomicLong total = new AtomicLong();
+        AtomicLong amount = new AtomicLong();
+        List<ShopUnit> children = shopUnitRepository.findAllChildrenById(id).stream()
+                .map((e) -> {
+                    ShopUnit child = findById(e.getId());
+                    total.addAndGet(child.getTotal());
+                    amount.addAndGet(child.getAmount());
+                    return child;
+                })
+                .collect(Collectors.toList());
+
+        unit.setTotal(total.get());
+        unit.setAmount(amount.get());
+        unit.setPrice(amount.get() == 0 ? 0 : total.get() / amount.get());
+        unit.setChildren(children);
+
+        if (children.isEmpty()) unit.setChildren(null);
+        return unit;
     }
 
     public ShopUnit deleteById(UUID id) {
