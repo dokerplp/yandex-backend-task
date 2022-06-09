@@ -11,14 +11,20 @@ CREATE TABLE SHOPUNIT (
     PRIMARY KEY (id)
 );
 
-CREATE FUNCTION check_parent(SHOPUNIT) RETURNS BOOLEAN
-    RETURN (SELECT TYPE FROM SHOPUNIT u WHERE u.id = $1.parentid) in ('CATEGORY', null);
+CREATE FUNCTION get_type(uuid) RETURNS SHOPUNITTYPE
+    RETURN (SELECT TYPE FROM SHOPUNIT u WHERE u.id = $1);
 
-CREATE FUNCTION check_no_children(SHOPUNIT) RETURNS BOOLEAN
-    RETURN (SELECT count(*) FROM SHOPUNIT U WHERE u.parentid = $1.id) = 0;
+CREATE FUNCTION check_parent(uuid) RETURNS BOOLEAN
+    RETURN get_type($1) = 'CATEGORY' OR get_type($1) IS NULL;
+
+CREATE FUNCTION check_no_children(uuid) RETURNS BOOLEAN
+    RETURN (SELECT count(*) FROM SHOPUNIT U WHERE u.parentid = $1) = 0;
 
 ALTER TABLE SHOPUNIT
-ADD CONSTRAINT type_check CHECK (check_parent(SHOPUNIT) AND (SHOPUNIT.type = 'CATEGORY' OR check_no_children(SHOPUNIT)));
+ADD CONSTRAINT type_check CHECK (check_parent(SHOPUNIT.parentid) AND (SHOPUNIT.type = 'CATEGORY' OR check_no_children(SHOPUNIT.id)));
+
+ALTER TABLE SHOPUNIT
+ADD CONSTRAINT price_check CHECK ( SHOPUNIT.type = 'CATEGORY' OR (SHOPUNIT.price >= 0 AND SHOPUNIT.price IS NOT NULL));
 
 
 comment on column SHOPUNIT.id is 'Уникальный идентфикатор';
