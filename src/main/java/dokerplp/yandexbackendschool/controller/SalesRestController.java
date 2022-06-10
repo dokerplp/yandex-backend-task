@@ -21,7 +21,7 @@ public class SalesRestController {
 
     @GetMapping("/sales")
     @ResponseStatus(HttpStatus.OK)
-    public ShopUnitStatisticResponse sales(
+    public ShopUnitStatisticResponse sales (
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date
     ) {
         List<ShopUnitStatisticUnit> statisticUnits = shopUnitService.findAllSalesByDate(date).stream()

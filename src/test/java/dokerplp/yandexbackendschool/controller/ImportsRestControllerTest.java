@@ -1,13 +1,9 @@
 package dokerplp.yandexbackendschool.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dokerplp.yandexbackendschool.dto.ShopUnitImport;
 import dokerplp.yandexbackendschool.dto.ShopUnitImportRequest;
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
 import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -20,25 +16,6 @@ import java.util.UUID;
 
 
 class ImportsRestControllerTest {
-
-    private final ObjectMapper mapper = new ObjectMapper();
-
-    {
-        mapper.findAndRegisterModules();
-    }
-
-    private CloseableHttpResponse importSendRequest(List<ShopUnitImport> importList) throws IOException {
-        ShopUnitImportRequest suir = new ShopUnitImportRequest(importList, LocalDateTime.now());
-
-        HttpPost request = new HttpPost("http://localhost:8080/imports");
-        StringEntity entity = new StringEntity(mapper.writeValueAsString(suir));
-        request.setEntity(entity);
-        request.setHeader("Accept", "application/json");
-        request.setHeader("Content-type", "application/json");
-
-        return HttpClientBuilder.create().build().execute(request);
-    }
-
     @Test
     public void simpleOfferTest() throws IOException {
         ShopUnitImport iphone7 = new ShopUnitImport();
@@ -51,7 +28,7 @@ class ImportsRestControllerTest {
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(iphone7);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
     }
@@ -68,7 +45,7 @@ class ImportsRestControllerTest {
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(phones);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
     }
@@ -93,7 +70,7 @@ class ImportsRestControllerTest {
         importList.add(iphone7);
         importList.add(iphone6);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
     }
@@ -118,7 +95,7 @@ class ImportsRestControllerTest {
         importList.add(iphone7);
         importList.add(iphone6);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
     }
@@ -170,7 +147,7 @@ class ImportsRestControllerTest {
         importList.add(iphone6);
         importList.add(phones);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
     }
@@ -187,7 +164,7 @@ class ImportsRestControllerTest {
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(object);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
 
@@ -197,7 +174,7 @@ class ImportsRestControllerTest {
         importList.clear();
         importList.add(object);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
 
@@ -207,7 +184,7 @@ class ImportsRestControllerTest {
         importList.clear();
         importList.add(object);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
     }
@@ -224,7 +201,7 @@ class ImportsRestControllerTest {
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(object);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
 
@@ -233,7 +210,7 @@ class ImportsRestControllerTest {
         importList.clear();
         importList.add(object);
 
-        try (CloseableHttpResponse response = importSendRequest(importList)) {
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
 
