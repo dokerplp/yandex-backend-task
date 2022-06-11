@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.sql.Types;
 
 public class ShopUnitTypeConverter extends EnumType<ShopUnitType> {
-
     @Override
     public void nullSafeSet(
             PreparedStatement st,
