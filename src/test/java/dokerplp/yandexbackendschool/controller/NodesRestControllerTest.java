@@ -41,7 +41,6 @@ public class NodesRestControllerTest {
 
         try (CloseableHttpResponse response = TestUtil.nodesSendRequest(iphone7.getId())){
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-            System.out.println(responseBody);
             ShopUnit unit = new ShopUnit.ShopUnitBuilder()
                     .setId(iphone7.getId())
                     .setName(iphone7.getName())
@@ -178,9 +177,7 @@ public class NodesRestControllerTest {
 
         try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())){
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-            System.out.println(responseBody);
             String json = TestUtil.mapper.writeValueAsString(productsUnit);
-            System.out.println(json);
             assertEquals(json, responseBody);
         }
     }
@@ -328,9 +325,7 @@ public class NodesRestControllerTest {
 
         try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())){
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-            System.out.println(responseBody);
             String json = TestUtil.mapper.writeValueAsString(productsUnit);
-            System.out.println(json);
             assertEquals(json, responseBody);
         }
     }

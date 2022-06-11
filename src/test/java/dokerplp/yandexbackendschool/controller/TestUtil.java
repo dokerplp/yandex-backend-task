@@ -3,6 +3,7 @@ package dokerplp.yandexbackendschool.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dokerplp.yandexbackendschool.dto.ShopUnitImportRequest;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -32,6 +33,14 @@ public class TestUtil {
         HttpPost request = new HttpPost(String.format("http://%s:%s/imports", TestUtil.host, TestUtil.port));
         StringEntity entity = new StringEntity(mapper.writeValueAsString(suir));
         request.setEntity(entity);
+        request.setHeader("Accept", "application/json");
+        request.setHeader("Content-type", "application/json");
+
+        return HttpClientBuilder.create().build().execute(request);
+    }
+
+    public static CloseableHttpResponse deleteSendRequest(UUID id) throws IOException {
+        HttpDelete request = new HttpDelete(String.format("http://%s:%s/delete/%s", TestUtil.host, TestUtil.port, id.toString()));
         request.setHeader("Accept", "application/json");
         request.setHeader("Content-type", "application/json");
 
