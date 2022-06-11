@@ -24,7 +24,7 @@ ALTER TABLE SHOPUNIT
 ADD CONSTRAINT type_check CHECK (check_parent(SHOPUNIT.parentid) AND (SHOPUNIT.type = 'CATEGORY' OR check_no_children(SHOPUNIT.id)));
 
 ALTER TABLE SHOPUNIT
-ADD CONSTRAINT price_check CHECK ( SHOPUNIT.type = 'CATEGORY' OR (SHOPUNIT.price >= 0 AND SHOPUNIT.price IS NOT NULL));
+ADD CONSTRAINT price_check CHECK ( (SHOPUNIT.type = 'CATEGORY' AND SHOPUNIT.price IS NULL) OR (SHOPUNIT.type != 'CATEGORY' AND SHOPUNIT.price IS NOT NULL AND SHOPUNIT.price >= 0 ));
 
 
 comment on column SHOPUNIT.id is 'Уникальный идентфикатор';

@@ -2,6 +2,7 @@ package dokerplp.yandexbackendschool.controller;
 
 import dokerplp.yandexbackendschool.dto.ShopUnitImport;
 import dokerplp.yandexbackendschool.dto.ShopUnitImportRequest;
+import dokerplp.yandexbackendschool.model.entity.ShopUnit;
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.junit.jupiter.api.Test;
@@ -18,12 +19,7 @@ import java.util.UUID;
 class ImportsRestControllerTest {
     @Test
     public void simpleOfferTest() throws IOException {
-        ShopUnitImport iphone7 = new ShopUnitImport();
-        iphone7.setId(UUID.randomUUID());
-        iphone7.setName("IPhone 7");
-        iphone7.setPrice(39990L);
-        iphone7.setType(ShopUnitType.OFFER);
-        iphone7.setParentId(null);
+        ShopUnitImport iphone7 = new ShopUnitImport(UUID.randomUUID(), "IPhone 7", null, ShopUnitType.OFFER, 39990L);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(iphone7);
@@ -35,12 +31,7 @@ class ImportsRestControllerTest {
 
     @Test
     public void simpleCategoryTest() throws IOException {
-        ShopUnitImport phones = new ShopUnitImport();
-        phones.setId(UUID.randomUUID());
-        phones.setName("Phones");
-        phones.setPrice(null);
-        phones.setType(ShopUnitType.CATEGORY);
-        phones.setParentId(null);
+        ShopUnitImport phones = new ShopUnitImport(UUID.randomUUID(), "Phones", null, ShopUnitType.CATEGORY, null);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(phones);
@@ -52,19 +43,8 @@ class ImportsRestControllerTest {
 
     @Test
     public void offerIsNotParentTest() throws IOException {
-        ShopUnitImport iphone7 = new ShopUnitImport();
-        iphone7.setId(UUID.randomUUID());
-        iphone7.setName("IPhone 7");
-        iphone7.setPrice(39990L);
-        iphone7.setType(ShopUnitType.OFFER);
-        iphone7.setParentId(UUID.randomUUID());
-
-        ShopUnitImport iphone6 = new ShopUnitImport();
-        iphone6.setId(UUID.randomUUID());
-        iphone6.setName("Iphone 6");
-        iphone6.setPrice(29990L);
-        iphone6.setType(ShopUnitType.OFFER);
-        iphone6.setParentId(iphone7.getId());
+        ShopUnitImport iphone7 = new ShopUnitImport(UUID.randomUUID(), "IPhone 7", UUID.randomUUID(), ShopUnitType.OFFER, 39990L);
+        ShopUnitImport iphone6 = new ShopUnitImport(UUID.randomUUID(), "IPhone 6", iphone7.getId(), ShopUnitType.OFFER, 29990L);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(iphone7);
@@ -77,19 +57,8 @@ class ImportsRestControllerTest {
 
     @Test
     public void offerHasNoChildrenTest() throws IOException {
-        ShopUnitImport iphone7 = new ShopUnitImport();
-        iphone7.setId(UUID.randomUUID());
-        iphone7.setName("IPhone 7");
-        iphone7.setPrice(39990L);
-        iphone7.setType(ShopUnitType.OFFER);
-        iphone7.setParentId(UUID.randomUUID());
-
-        ShopUnitImport iphone6 = new ShopUnitImport();
-        iphone6.setId(iphone7.getParentId());
-        iphone6.setName("Iphone 6");
-        iphone6.setPrice(29990L);
-        iphone6.setType(ShopUnitType.OFFER);
-        iphone6.setParentId(null);
+        ShopUnitImport iphone7 = new ShopUnitImport(UUID.randomUUID(), "IPhone 7", UUID.randomUUID(), ShopUnitType.OFFER, 39990L);
+        ShopUnitImport iphone6 = new ShopUnitImport(iphone7.getParentId(), "IPhone 6", null, ShopUnitType.OFFER, 29990L);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(iphone7);
@@ -105,40 +74,11 @@ class ImportsRestControllerTest {
     @Test
     public void categoryTest() throws IOException {
 
-        ShopUnitImport object = new ShopUnitImport();
-        object.setId(UUID.randomUUID());
-        object.setName("Object");
-        object.setPrice(null);
-        object.setType(ShopUnitType.CATEGORY);
-        object.setParentId(null);
-
-        ShopUnitImport phones = new ShopUnitImport();
-        phones.setId(UUID.randomUUID());
-        phones.setName("Phones");
-        phones.setPrice(null);
-        phones.setType(ShopUnitType.CATEGORY);
-        phones.setParentId(object.getId());
-
-        ShopUnitImport iphone7 = new ShopUnitImport();
-        iphone7.setId(UUID.randomUUID());
-        iphone7.setName("IPhone 7");
-        iphone7.setPrice(39990L);
-        iphone7.setType(ShopUnitType.OFFER);
-        iphone7.setParentId(phones.getId());
-
-        ShopUnitImport iphone6 = new ShopUnitImport();
-        iphone6.setId(UUID.randomUUID());
-        iphone6.setName("Iphone 6");
-        iphone6.setPrice(29990L);
-        iphone6.setType(ShopUnitType.OFFER);
-        iphone6.setParentId(phones.getId());
-
-        ShopUnitImport watches = new ShopUnitImport();
-        watches.setId(UUID.randomUUID());
-        watches.setName("Watches");
-        watches.setPrice(null);
-        watches.setType(ShopUnitType.CATEGORY);
-        watches.setParentId(object.getId());
+        ShopUnitImport object = new ShopUnitImport(UUID.randomUUID(), "Object", null, ShopUnitType.CATEGORY, null);
+        ShopUnitImport phones = new ShopUnitImport(UUID.randomUUID(), "Phones", object.getId(), ShopUnitType.CATEGORY, null);
+        ShopUnitImport iphone7 = new ShopUnitImport(UUID.randomUUID(), "IPhone 7", phones.getId(), ShopUnitType.OFFER, 39990L);
+        ShopUnitImport iphone6 =new ShopUnitImport(UUID.randomUUID(), "IPhone 6", phones.getId(), ShopUnitType.OFFER, 29990L);
+        ShopUnitImport watches = new ShopUnitImport(UUID.randomUUID(), "Watches", object.getId(), ShopUnitType.CATEGORY, null);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(watches);
@@ -154,12 +94,7 @@ class ImportsRestControllerTest {
 
     @Test
     public void wrongCategoryTest() throws IOException {
-        ShopUnitImport object = new ShopUnitImport();
-        object.setId(null);
-        object.setName("Object");
-        object.setPrice(null);
-        object.setType(ShopUnitType.CATEGORY);
-        object.setParentId(null);
+        ShopUnitImport object = new ShopUnitImport(null, "Object", null, ShopUnitType.CATEGORY, null);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(object);
@@ -187,16 +122,23 @@ class ImportsRestControllerTest {
         try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
+
+        object.setType(ShopUnitType.CATEGORY);
+
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
+            assertEquals(response.getStatusLine().getStatusCode(), 200);
+        }
+
+        object.setPrice(10L);
+
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
+            assertEquals(response.getStatusLine().getStatusCode(), 400);
+        }
     }
 
     @Test
     public void wrongOfferTest() throws IOException {
-        ShopUnitImport object = new ShopUnitImport();
-        object.setId(UUID.randomUUID());
-        object.setName("Object");
-        object.setPrice(null);
-        object.setType(ShopUnitType.OFFER);
-        object.setParentId(null);
+        ShopUnitImport object = new ShopUnitImport(UUID.randomUUID(), "Object", null, ShopUnitType.OFFER, null);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(object);

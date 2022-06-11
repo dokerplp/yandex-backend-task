@@ -58,7 +58,7 @@ public class ShopUnitService {
 
         unit.setTotal(total.get());
         unit.setAmount(amount.get());
-        unit.setPrice(amount.get() == 0 ? 0 : total.get() / amount.get());
+        unit.setPrice(amount.get() == 0 ? null : total.get() / amount.get());
         unit.setChildren(children);
 
         if (children.isEmpty()) unit.setChildren(null);
