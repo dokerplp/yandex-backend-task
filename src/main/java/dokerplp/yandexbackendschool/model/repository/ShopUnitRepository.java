@@ -18,6 +18,6 @@ public interface ShopUnitRepository extends CrudRepository<ShopUnit, UUID> {
     @Query("select u from ShopUnit u where u.parentId = ?1")
     List<ShopUnit> findAllChildrenById(UUID id);
 
-    @Query("select u from ShopUnit u where u.date >= ?1 and u.date <= ?2")
+    @Query("select u from ShopUnit u where u.date >= ?1 and u.date <= ?2 and u.type = 'CATEGORY'")
     List<ShopUnit> findAllSalesByDate(LocalDateTime start, LocalDateTime end);
 }
