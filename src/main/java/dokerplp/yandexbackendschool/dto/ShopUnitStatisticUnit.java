@@ -1,5 +1,6 @@
 package dokerplp.yandexbackendschool.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import dokerplp.yandexbackendschool.model.entity.ShopUnit;
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
 import lombok.AllArgsConstructor;
@@ -20,6 +21,7 @@ public class ShopUnitStatisticUnit {
     private UUID parentId;
     private ShopUnitType type;
     private Long price;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'")
     private LocalDateTime date;
 
     public static ShopUnitStatisticUnit fromShopUnit(ShopUnit unit) {
