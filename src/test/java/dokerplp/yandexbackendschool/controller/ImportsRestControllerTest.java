@@ -77,7 +77,7 @@ class ImportsRestControllerTest {
         ShopUnitImport object = new ShopUnitImport(UUID.randomUUID(), "Object", null, ShopUnitType.CATEGORY, null);
         ShopUnitImport phones = new ShopUnitImport(UUID.randomUUID(), "Phones", object.getId(), ShopUnitType.CATEGORY, null);
         ShopUnitImport iphone7 = new ShopUnitImport(UUID.randomUUID(), "IPhone 7", phones.getId(), ShopUnitType.OFFER, 39990L);
-        ShopUnitImport iphone6 =new ShopUnitImport(UUID.randomUUID(), "IPhone 6", phones.getId(), ShopUnitType.OFFER, 29990L);
+        ShopUnitImport iphone6 = new ShopUnitImport(UUID.randomUUID(), "IPhone 6", phones.getId(), ShopUnitType.OFFER, 29990L);
         ShopUnitImport watches = new ShopUnitImport(UUID.randomUUID(), "Watches", object.getId(), ShopUnitType.CATEGORY, null);
 
         List<ShopUnitImport> importList = new ArrayList<>();
@@ -156,5 +156,28 @@ class ImportsRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
 
+    }
+
+    @Test void duplicatesTest() throws IOException {
+        ShopUnitImport object1 = new ShopUnitImport(UUID.randomUUID(), "Object1", null, ShopUnitType.OFFER, 12314324L);
+        ShopUnitImport object2 = new ShopUnitImport(object1.getId(), "Object2", null, ShopUnitType.OFFER, 4134342L);
+
+        List<ShopUnitImport> importList = new ArrayList<>();
+        importList.add(object1);
+        importList.add(object2);
+
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
+            assertEquals(response.getStatusLine().getStatusCode(), 400);
+        }
+
+        object2.setId(UUID.randomUUID());
+
+        importList.clear();
+        importList.add(object1);
+        importList.add(object2);
+
+        try (CloseableHttpResponse response = TestUtil.importSendRequest(new ShopUnitImportRequest(importList, LocalDateTime.now()))) {
+            assertEquals(response.getStatusLine().getStatusCode(), 200);
+        }
     }
 }

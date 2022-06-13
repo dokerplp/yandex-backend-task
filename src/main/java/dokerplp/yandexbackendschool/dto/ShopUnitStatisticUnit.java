@@ -1,6 +1,7 @@
 package dokerplp.yandexbackendschool.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import dokerplp.yandexbackendschool.model.entity.History;
 import dokerplp.yandexbackendschool.model.entity.ShopUnit;
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,17 @@ public class ShopUnitStatisticUnit {
     public static ShopUnitStatisticUnit fromShopUnit(ShopUnit unit) {
         ShopUnitStatisticUnit susu = new ShopUnitStatisticUnit();
         susu.id = unit.getId();
+        susu.name = unit.getName();
+        susu.parentId = unit.getParentId();
+        susu.type = unit.getType();
+        susu.price = unit.getPrice();
+        susu.date = unit.getDate();
+        return susu;
+    }
+
+    public static ShopUnitStatisticUnit fromHistory(History unit) {
+        ShopUnitStatisticUnit susu = new ShopUnitStatisticUnit();
+        susu.id = unit.getShopUnitId();
         susu.name = unit.getName();
         susu.parentId = unit.getParentId();
         susu.type = unit.getType();

@@ -69,37 +69,37 @@ public class DeleteRestControllerTest {
         ShopUnitImport xiaomi = new ShopUnitImport(UUID.fromString("3dc1c8ff-4ba5-4a06-9bf0-239bd516a124"), "Xiaomi", android.getId(), ShopUnitType.OFFER, 13990L);
 
         LocalDateTime now = LocalDateTime.now();
-        ShopUnit xiaomiUnit = new ShopUnit(xiaomi.getId(), "Xiaomi", now, android.getId(), ShopUnitType.OFFER, 13990L, null, -1, -1);
+        ShopUnit xiaomiUnit = new ShopUnit(xiaomi.getId(), "Xiaomi", now, android.getId(), ShopUnitType.OFFER, 13990L, null);
 
         List<ShopUnit> xiaomiList = new ArrayList<>();
         xiaomiList.add(xiaomiUnit);
 
-        ShopUnit androidUnit = new ShopUnit(android.getId(), "Android", now, phones.getId(), ShopUnitType.CATEGORY, 13990L, xiaomiList, -1, -1);
+        ShopUnit androidUnit = new ShopUnit(android.getId(), "Android", now, phones.getId(), ShopUnitType.CATEGORY, 13990L, xiaomiList);
 
         List<ShopUnit> phonesList = new ArrayList<>();
         phonesList.add(androidUnit);
 
-        ShopUnit tabletsUnit = new ShopUnit(tablets.getId(), "Tablets", now,  tech.getId(), ShopUnitType.CATEGORY, null, null, -1, -1);
-        ShopUnit phonesUnit = new ShopUnit(phones.getId(), "Phones", now, tech.getId(), ShopUnitType.CATEGORY, 13990L, phonesList, -1, -1);
+        ShopUnit tabletsUnit = new ShopUnit(tablets.getId(), "Tablets", now,  tech.getId(), ShopUnitType.CATEGORY, null, null);
+        ShopUnit phonesUnit = new ShopUnit(phones.getId(), "Phones", now, tech.getId(), ShopUnitType.CATEGORY, 13990L, phonesList);
 
         List<ShopUnit> techList = new ArrayList<>();
         techList.add(phonesUnit);
         techList.add(tabletsUnit);
 
-        ShopUnit techUnit = new ShopUnit(tech.getId(), "Tech", now, products.getId(), ShopUnitType.CATEGORY, 13990L, techList, -1, -1);
+        ShopUnit techUnit = new ShopUnit(tech.getId(), "Tech", now, products.getId(), ShopUnitType.CATEGORY, 13990L, techList);
 
-        ShopUnit washingMachinesUnit = new ShopUnit(washingMachines.getId(), "Washing Machines", now, appliances.getId(), ShopUnitType.CATEGORY, null, null, -1, -1);
+        ShopUnit washingMachinesUnit = new ShopUnit(washingMachines.getId(), "Washing Machines", now, appliances.getId(), ShopUnitType.CATEGORY, null, null);
 
         List<ShopUnit> appliancesList = new ArrayList<>();
         appliancesList.add(washingMachinesUnit);
 
-        ShopUnit appliancesUnit = new ShopUnit(appliances.getId(), "Appliances", now, products.getId(), ShopUnitType.CATEGORY, null, appliancesList, -1, -1);
+        ShopUnit appliancesUnit = new ShopUnit(appliances.getId(), "Appliances", now, products.getId(), ShopUnitType.CATEGORY, null, appliancesList);
 
         List<ShopUnit> productsList = new ArrayList<>();
         productsList.add(appliancesUnit);
         productsList.add(techUnit);
 
-        ShopUnit productsUnit = new ShopUnit(products.getId(), "Products", now, null, ShopUnitType.CATEGORY, 13990L, productsList, -1, -1);
+        ShopUnit productsUnit = new ShopUnit(products.getId(), "Products", now, null, ShopUnitType.CATEGORY, 13990L, productsList);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(products);
@@ -159,7 +159,7 @@ public class DeleteRestControllerTest {
         ShopUnitImport xiaomi = new ShopUnitImport(UUID.fromString("3dc1c8ff-4ba5-4a06-9bf0-239bd516a124"), "Xiaomi", android.getId(), ShopUnitType.OFFER, 13990L);
 
         LocalDateTime now = LocalDateTime.now();
-        ShopUnit productsUnit = new ShopUnit(products.getId(), "Products", now, null, ShopUnitType.CATEGORY, null, null, -1, -1);
+        ShopUnit productsUnit = new ShopUnit(products.getId(), "Products", now, null, ShopUnitType.CATEGORY, null, null);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(products);
@@ -209,14 +209,14 @@ public class DeleteRestControllerTest {
 
         LocalDateTime now = LocalDateTime.now();
 
-        ShopUnit iphone6Unit = new ShopUnit(iphone6.getId(), "IPhone 6", now, apple.getId(), ShopUnitType.OFFER, 29990L, null, -1, -1);
-        ShopUnit iphone7Unit = new ShopUnit(iphone7.getId(), "IPhone 7", now, apple.getId(), ShopUnitType.OFFER, 39990L, null, -1, -1);
+        ShopUnit iphone6Unit = new ShopUnit(iphone6.getId(), "IPhone 6", now, apple.getId(), ShopUnitType.OFFER, 29990L, null);
+        ShopUnit iphone7Unit = new ShopUnit(iphone7.getId(), "IPhone 7", now, apple.getId(), ShopUnitType.OFFER, 39990L, null);
 
         List<ShopUnit> iphoneList = new ArrayList<>();
         iphoneList.add(iphone7Unit);
         iphoneList.add(iphone6Unit);
 
-        ShopUnit appleUnit = new ShopUnit(apple.getId(), "Apple", now, null, ShopUnitType.CATEGORY, 34990L, iphoneList, -1, -1);
+        ShopUnit appleUnit = new ShopUnit(apple.getId(), "Apple", now, null, ShopUnitType.CATEGORY, 34990L, iphoneList);
 
         List<ShopUnitImport> importList = new ArrayList<>();
         importList.add(apple);

@@ -67,11 +67,11 @@ public class SalesRestControllerTest {
         ShopUnitStatisticUnit philipsStat = new ShopUnitStatisticUnit(UUID.fromString("7dc1c8ff-4ba5-4a06-9bf0-239bd516a125"), "Philips", null, ShopUnitType.OFFER, 125990L, time2);
 
         List<ShopUnitStatisticUnit> units1 = new ArrayList<>();
+        units1.add(philipsStat);
         units1.add(iphone5stat);
         units1.add(iphone6stat);
         units1.add(iphone7stat);
         units1.add(xiaomiStat);
-        units1.add(philipsStat);
         ShopUnitStatisticResponse susr1 = new ShopUnitStatisticResponse(units1);
 
         LocalDateTime time3 = LocalDateTime.parse("2022-06-12T21:00:00");

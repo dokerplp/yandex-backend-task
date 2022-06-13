@@ -13,6 +13,7 @@ import org.hibernate.annotations.TypeDef;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -51,14 +52,6 @@ public class ShopUnit {
     @Transient
     private List<ShopUnit> children;
 
-    @JsonIgnore
-    @Transient
-    private long total;
-
-    @JsonIgnore
-    @Transient
-    private long amount;
-
     public static class ShopUnitBuilder {
         private final ShopUnit shopUnit = new ShopUnit();
 
@@ -95,5 +88,31 @@ public class ShopUnit {
         public ShopUnit build() {
             return shopUnit;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShopUnit unit = (ShopUnit) o;
+        return id.equals(unit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "ShopUnit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", parentId=" + parentId +
+                ", type=" + type +
+                ", price=" + price +
+                ", children=" + children +
+                '}';
     }
 }
