@@ -23,7 +23,7 @@ public class SalesRestControllerTest {
 
     @Test
     public void emptyListTest() throws IOException, URISyntaxException {
-        try (CloseableHttpResponse response = TestUtil.salesSendRequest(LocalDateTime.now().minusDays(100))){
+        try (CloseableHttpResponse response = TestUtil.salesSendRequest(LocalDateTime.now().minusDays(100))) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(new ShopUnitStatisticResponse(null));
             assertEquals(json, responseBody);
@@ -75,7 +75,7 @@ public class SalesRestControllerTest {
         ShopUnitStatisticResponse susr1 = new ShopUnitStatisticResponse(units1);
 
         LocalDateTime time3 = LocalDateTime.parse("2022-06-12T21:00:00");
-        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time3)){
+        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time3)) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(susr1);
             assertEquals(json, responseBody);
@@ -87,21 +87,21 @@ public class SalesRestControllerTest {
         ShopUnitStatisticResponse susr2 = new ShopUnitStatisticResponse(units2);
 
         LocalDateTime time4 = LocalDateTime.parse("2022-06-13T19:00:00");
-        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time4)){
+        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time4)) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(susr2);
             assertEquals(json, responseBody);
         }
 
         LocalDateTime time5 = LocalDateTime.parse("2022-06-13T20:00:00");
-        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time5)){
+        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time5)) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(susr2);
             assertEquals(json, responseBody);
         }
 
         LocalDateTime time6 = LocalDateTime.parse("2022-06-13T20:00:01");
-        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time6)){
+        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time6)) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(new ShopUnitStatisticResponse(null));
             assertEquals(json, responseBody);
@@ -128,7 +128,7 @@ public class SalesRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time1)){
+        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time1)) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(new ShopUnitStatisticResponse(null));
             assertEquals(json, responseBody);
@@ -174,7 +174,7 @@ public class SalesRestControllerTest {
         units.add(xiaomiStat);
         ShopUnitStatisticResponse susr = new ShopUnitStatisticResponse(units);
 
-        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time1)){
+        try (CloseableHttpResponse response = TestUtil.salesSendRequest(time1)) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(susr);
             assertEquals(json, responseBody);

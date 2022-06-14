@@ -1,3 +1,4 @@
 package dokerplp.yandexbackendschool.exception;
 
-public class NotFoundException extends RuntimeException {}
+public class NotFoundException extends RuntimeException {
+}

@@ -1,3 +1,4 @@
 package dokerplp.yandexbackendschool.exception;
 
-public class BadRequestException extends RuntimeException {}
+public class BadRequestException extends RuntimeException {
+}

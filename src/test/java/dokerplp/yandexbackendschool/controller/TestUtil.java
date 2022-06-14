@@ -11,7 +11,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -19,11 +18,12 @@ import java.util.UUID;
 public class TestUtil {
 
     public static final ObjectMapper mapper = new ObjectMapper();
+    public static final String host = "localhost";
+    public static final long port = 8080;
+
     static {
         mapper.findAndRegisterModules();
     }
-    public static final String host = "localhost";
-    public static final long port = 8080;
 
     public static CloseableHttpResponse nodesSendRequest(UUID id) throws IOException {
         HttpGet request = new HttpGet(String.format("http://%s:%s/nodes/%s", TestUtil.host, TestUtil.port, id.toString()));

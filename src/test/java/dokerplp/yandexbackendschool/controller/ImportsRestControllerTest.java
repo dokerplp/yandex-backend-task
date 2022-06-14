@@ -2,18 +2,17 @@ package dokerplp.yandexbackendschool.controller;
 
 import dokerplp.yandexbackendschool.dto.ShopUnitImport;
 import dokerplp.yandexbackendschool.dto.ShopUnitImportRequest;
-import dokerplp.yandexbackendschool.model.entity.ShopUnit;
 import dokerplp.yandexbackendschool.model.entity.ShopUnitType;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 class ImportsRestControllerTest {
@@ -68,7 +67,6 @@ class ImportsRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 400);
         }
     }
-
 
 
     @Test
@@ -158,7 +156,8 @@ class ImportsRestControllerTest {
 
     }
 
-    @Test void duplicatesTest() throws IOException {
+    @Test
+    void duplicatesTest() throws IOException {
         ShopUnitImport object1 = new ShopUnitImport(UUID.randomUUID(), "Object1", null, ShopUnitType.OFFER, 12314324L);
         ShopUnitImport object2 = new ShopUnitImport(object1.getId(), "Object2", null, ShopUnitType.OFFER, 4134342L);
 

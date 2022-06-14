@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class HistoryService {
@@ -47,7 +46,7 @@ public class HistoryService {
         }
 
         long total = 0;
-        long amount  = 0;
+        long amount = 0;
         for (ShopUnit child : shopUnitRepository.findAllChildrenById(id)) {
             used = getPrice(child.getId(), used);
             total += used.get(child.getId()).getTotal();

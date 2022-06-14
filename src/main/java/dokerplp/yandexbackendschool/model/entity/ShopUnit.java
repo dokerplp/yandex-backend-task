@@ -1,7 +1,6 @@
 package dokerplp.yandexbackendschool.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dokerplp.yandexbackendschool.util.ShopUnitTypeConverter;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -52,6 +51,32 @@ public class ShopUnit {
     @Transient
     private List<ShopUnit> children;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShopUnit unit = (ShopUnit) o;
+        return id.equals(unit.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+        return "ShopUnit{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", parentId=" + parentId +
+                ", type=" + type +
+                ", price=" + price +
+                ", children=" + children +
+                '}';
+    }
+
     public static class ShopUnitBuilder {
         private final ShopUnit shopUnit = new ShopUnit();
 
@@ -88,31 +113,5 @@ public class ShopUnit {
         public ShopUnit build() {
             return shopUnit;
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ShopUnit unit = (ShopUnit) o;
-        return id.equals(unit.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "ShopUnit{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", date=" + date +
-                ", parentId=" + parentId +
-                ", type=" + type +
-                ", price=" + price +
-                ", children=" + children +
-                '}';
     }
 }

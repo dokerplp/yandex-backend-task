@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Repository
-public interface HistoryRepository extends CrudRepository<History, Long>  {
+public interface HistoryRepository extends CrudRepository<History, Long> {
 
     @Query("select h from History h where h.shopUnitId = ?1 and h.date >= ?2 and h.date <= ?3")
     List<History> getStatistic(UUID shopUnitId, LocalDateTime dateStart, LocalDateTime dateEnd);

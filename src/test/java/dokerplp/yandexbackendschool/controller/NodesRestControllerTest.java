@@ -39,7 +39,7 @@ public class NodesRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(iphone7.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(iphone7.getId())) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             ShopUnit unit = new ShopUnit.ShopUnitBuilder()
                     .setId(iphone7.getId())
@@ -68,7 +68,7 @@ public class NodesRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(phones.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(phones.getId())) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             ShopUnit unit = new ShopUnit.ShopUnitBuilder()
                     .setId(phones.getId())
@@ -123,7 +123,7 @@ public class NodesRestControllerTest {
         phonesList.add(appleUnit);
         phonesList.add(androidUnit);
 
-        ShopUnit tabletsUnit = new ShopUnit(tablets.getId(), "Tablets", now,  tech.getId(), ShopUnitType.CATEGORY, null, null);
+        ShopUnit tabletsUnit = new ShopUnit(tablets.getId(), "Tablets", now, tech.getId(), ShopUnitType.CATEGORY, null, null);
         ShopUnit phonesUnit = new ShopUnit(phones.getId(), "Phones", now, tech.getId(), ShopUnitType.CATEGORY, 25990L, phonesList);
 
         List<ShopUnit> techList = new ArrayList<>();
@@ -175,7 +175,7 @@ public class NodesRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(productsUnit);
             assertEquals(json, responseBody);
@@ -293,7 +293,7 @@ public class NodesRestControllerTest {
         phonesList.add(androidUnit);
         phonesList.add(appleUnit);
 
-        ShopUnit tabletsUnit = new ShopUnit(tablets.getId(), "Tablets", time1,  tech.getId(), ShopUnitType.CATEGORY, null, null);
+        ShopUnit tabletsUnit = new ShopUnit(tablets.getId(), "Tablets", time1, tech.getId(), ShopUnitType.CATEGORY, null, null);
         ShopUnit phonesUnit = new ShopUnit(phones.getId(), "Phones", time2, tech.getId(), ShopUnitType.CATEGORY, 25990L, phonesList);
 
         List<ShopUnit> techList = new ArrayList<>();
@@ -323,7 +323,7 @@ public class NodesRestControllerTest {
 
         ShopUnit productsUnit = new ShopUnit(products.getId(), "Products", time3, null, ShopUnitType.CATEGORY, 60790L, productsList);
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(productsUnit);
             assertEquals(json, responseBody);

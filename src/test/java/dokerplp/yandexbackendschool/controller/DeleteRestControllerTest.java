@@ -37,15 +37,15 @@ public class DeleteRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(iphone7.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(iphone7.getId())) {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.deleteSendRequest(iphone7.getId())){
+        try (CloseableHttpResponse response = TestUtil.deleteSendRequest(iphone7.getId())) {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(iphone7.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(iphone7.getId())) {
             assertEquals(response.getStatusLine().getStatusCode(), 404);
         }
     }
@@ -79,7 +79,7 @@ public class DeleteRestControllerTest {
         List<ShopUnit> phonesList = new ArrayList<>();
         phonesList.add(androidUnit);
 
-        ShopUnit tabletsUnit = new ShopUnit(tablets.getId(), "Tablets", now,  tech.getId(), ShopUnitType.CATEGORY, null, null);
+        ShopUnit tabletsUnit = new ShopUnit(tablets.getId(), "Tablets", now, tech.getId(), ShopUnitType.CATEGORY, null, null);
         ShopUnit phonesUnit = new ShopUnit(phones.getId(), "Phones", now, tech.getId(), ShopUnitType.CATEGORY, 13990L, phonesList);
 
         List<ShopUnit> techList = new ArrayList<>();
@@ -131,7 +131,7 @@ public class DeleteRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             System.out.println(responseBody);
             String json = TestUtil.mapper.writeValueAsString(productsUnit);
@@ -191,7 +191,7 @@ public class DeleteRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(products.getId())) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             System.out.println(responseBody);
             String json = TestUtil.mapper.writeValueAsString(productsUnit);
@@ -234,7 +234,7 @@ public class DeleteRestControllerTest {
             assertEquals(response.getStatusLine().getStatusCode(), 200);
         }
 
-        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(apple.getId())){
+        try (CloseableHttpResponse response = TestUtil.nodesSendRequest(apple.getId())) {
             String responseBody = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
             String json = TestUtil.mapper.writeValueAsString(appleUnit);
             assertEquals(json, responseBody);

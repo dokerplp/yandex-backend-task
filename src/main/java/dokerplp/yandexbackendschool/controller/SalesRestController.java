@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,7 +26,7 @@ public class SalesRestController {
 
     @GetMapping("/sales")
     @ResponseStatus(HttpStatus.OK)
-    public ShopUnitStatisticResponse sales (
+    public ShopUnitStatisticResponse sales(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime date
     ) {
         List<ShopUnitStatisticUnit> statisticUnits = shopUnitService.findAllSalesByDate(date).stream()
