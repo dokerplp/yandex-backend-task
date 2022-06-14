@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -57,5 +58,18 @@ public class History {
         this.parentId = unit.getParentId();
         this.type = unit.getType();
         this.price = unit.getPrice();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        History history = (History) o;
+        return shopUnitId.equals(history.shopUnitId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(shopUnitId);
     }
 }

@@ -8,6 +8,7 @@ import dokerplp.yandexbackendschool.model.repository.ShopUnitRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -68,5 +69,9 @@ public class HistoryService {
 
     public void deleteAllByShopUnitId(UUID id) {
         historyRepository.deleteAllByShopUnitId(id);
+    }
+
+    public List<History> getStatistic(UUID shopUnitId, LocalDateTime dateStart, LocalDateTime dateEnd) {
+        return historyRepository.getStatistic(shopUnitId, dateStart, dateEnd);
     }
 }

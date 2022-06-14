@@ -64,4 +64,18 @@ public class TestUtil {
         return HttpClientBuilder.create().build().execute(request);
     }
 
+    public static CloseableHttpResponse statisticSendRequest(UUID id, LocalDateTime dateStart, LocalDateTime dateEnd) throws IOException, URISyntaxException {
+
+        URIBuilder builder = new URIBuilder(String.format("http://%s:%s/node/%s/statistic", TestUtil.host, TestUtil.port, id.toString()));
+        builder.setParameter("dateStart", dateStart.toString());
+        builder.setParameter("dateEnd", dateEnd.toString());
+
+        HttpGet request = new HttpGet(builder.build());
+
+        request.setHeader("Accept", "application/json");
+        request.setHeader("Content-type", "application/json");
+
+        return HttpClientBuilder.create().build().execute(request);
+    }
+
 }

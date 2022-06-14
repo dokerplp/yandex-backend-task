@@ -71,10 +71,12 @@ public class ShopUnitService {
         Set<ShopUnit> units = getAllParents(del);
 
         LocalDateTime now = LocalDateTime.now();
+
         Set<History> histories = units.stream()
                 .map(History::new)
                 .peek((e) -> e.setDate(now))
                 .collect(Collectors.toSet());
+
         historyService.updateHistory(histories);
 
         return del;
@@ -86,7 +88,7 @@ public class ShopUnitService {
         ShopUnit unit = optional.get();
 
         List<ShopUnit> children = shopUnitRepository.findAllChildrenById(id);
-        children.forEach((e) -> deleteById(e.getId()));
+        children.forEach((e) -> delete(e.getId()));
 
         historyService.deleteAllByShopUnitId(id);
         shopUnitRepository.deleteById(unit.getId());
