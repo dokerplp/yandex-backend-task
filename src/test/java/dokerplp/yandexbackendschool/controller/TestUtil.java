@@ -18,15 +18,14 @@ import java.util.UUID;
 public class TestUtil {
 
     public static final ObjectMapper mapper = new ObjectMapper();
-    public static final String host = "localhost";
-    public static final long port = 8080;
+    public static final String host = "https://generally-2026.usr.yandex-academy.ru";
 
     static {
         mapper.findAndRegisterModules();
     }
 
     public static CloseableHttpResponse nodesSendRequest(UUID id) throws IOException {
-        HttpGet request = new HttpGet(String.format("http://%s:%s/nodes/%s", TestUtil.host, TestUtil.port, id.toString()));
+        HttpGet request = new HttpGet(String.format("%s/nodes/%s", TestUtil.host, id.toString()));
         request.setHeader("Accept", "application/json");
         request.setHeader("Content-type", "application/json");
 
@@ -34,7 +33,7 @@ public class TestUtil {
     }
 
     public static CloseableHttpResponse importSendRequest(ShopUnitImportRequest suir) throws IOException {
-        HttpPost request = new HttpPost(String.format("http://%s:%s/imports", TestUtil.host, TestUtil.port));
+        HttpPost request = new HttpPost(String.format("%s/imports", TestUtil.host));
         StringEntity entity = new StringEntity(mapper.writeValueAsString(suir));
         request.setEntity(entity);
         request.setHeader("Accept", "application/json");
@@ -44,7 +43,7 @@ public class TestUtil {
     }
 
     public static CloseableHttpResponse deleteSendRequest(UUID id) throws IOException {
-        HttpDelete request = new HttpDelete(String.format("http://%s:%s/delete/%s", TestUtil.host, TestUtil.port, id.toString()));
+        HttpDelete request = new HttpDelete(String.format("%s/delete/%s", TestUtil.host, id.toString()));
         request.setHeader("Accept", "application/json");
         request.setHeader("Content-type", "application/json");
 
@@ -53,7 +52,7 @@ public class TestUtil {
 
     public static CloseableHttpResponse salesSendRequest(LocalDateTime dateTime) throws IOException, URISyntaxException {
 
-        URIBuilder builder = new URIBuilder(String.format("http://%s:%s/sales", TestUtil.host, TestUtil.port));
+        URIBuilder builder = new URIBuilder(String.format("%s/sales", TestUtil.host));
         builder.setParameter("date", dateTime.toString());
 
         HttpGet request = new HttpGet(builder.build());
@@ -66,7 +65,7 @@ public class TestUtil {
 
     public static CloseableHttpResponse statisticSendRequest(UUID id, LocalDateTime dateStart, LocalDateTime dateEnd) throws IOException, URISyntaxException {
 
-        URIBuilder builder = new URIBuilder(String.format("http://%s:%s/node/%s/statistic", TestUtil.host, TestUtil.port, id.toString()));
+        URIBuilder builder = new URIBuilder(String.format("%s/node/%s/statistic", TestUtil.host, id.toString()));
         builder.setParameter("dateStart", dateStart.toString());
         builder.setParameter("dateEnd", dateEnd.toString());
 

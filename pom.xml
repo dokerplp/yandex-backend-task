@@ -82,6 +82,7 @@
     </dependencies>
 
     <build>
+        <finalName>yandex-backend-task</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
