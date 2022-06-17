@@ -1,24 +1,17 @@
 [Unit]
 Description=Running yandex backend school task in docker-compose
 Requires=docker.service
-After=syslog.target
-After=network.target
 After=docker.service
 
 [Service]
-Restart=always
-Type=forking
-
+Type=oneshot
+RemainAfterExit=true
 WorkingDirectory=/home/ubuntu/task/yandex-backend-task
 
-# Remove old containers, network and volumes
-ExecStartPre=/usr/local/bin/docker-compose down
-
 # Compose up
-ExecStart=bash start.sh
-
+ExecStart=/usr/bin/bash start.sh
 # Compose down, remove containers
-ExecStop=/usr/local/bin/docker-compose down
+ExecStop=/usr/bin/sudo /usr/local/bin/docker-compose down
 
 [Install]
 WantedBy=multi-user.target
