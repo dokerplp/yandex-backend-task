@@ -42,8 +42,6 @@ comment on column SHOPUNIT.parentid is 'UUID родительской катег
 comment on column SHOPUNIT.type is 'Уникальный идентфикатор';
 comment on column SHOPUNIT.price is 'Целое число, для категории - это средняя цена всех дочерних товаров(включая товары подкатегорий). Если цена является не целым числом, округляется в меньшую сторону до целого числа. Если категория не содержит товаров цена равна null.';
 
-
-
 CREATE TABLE HISTORY
 (
     id         integer unique           not null,
