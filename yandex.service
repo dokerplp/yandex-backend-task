@@ -1,6 +1,8 @@
 [Unit]
 Description=Running yandex backend school task in docker-compose
 Requires=docker.service
+After=syslog.target
+After=network.target
 After=docker.service
 
 [Service]
