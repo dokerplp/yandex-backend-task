@@ -1,0 +1,25 @@
+[Unit]
+Description=Start docker-compose
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+SuccessExitStatus=143
+Type=forking
+
+WorkingDirectory=/home/ubuntu/task/yandex-backend-task
+
+# Remove old containers, network and volumes
+ExecStartPre=/usr/local/bin/docker-compose -f docker-compose.yaml down -v
+ExecStartPre=-/bin/bash -c 'docker network rm docker_jfrog_net'
+ExecStartPre=-/bin/bash -c 'docker ps -aqf "name=artifactory" | xargs docker rm'
+
+# Compose up
+ExecStart=/usr/local/bin/docker-compose -f docker-compose.yaml up
+
+# Compose down, remove containers
+ExecStop=/usr/local/bin/docker-compose -f docker-compose.yaml down
+
+[Install]
+WantedBy=multi-user.target
