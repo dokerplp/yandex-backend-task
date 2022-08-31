@@ -1,0 +1,17 @@
+[Unit]
+Description=Running yandex backend school task in docker-compose
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+WorkingDirectory=/home/ubuntu/task/yandex-backend-task
+
+# Compose up
+ExecStart=/usr/bin/bash start.sh
+# Compose down, remove containers
+ExecStop=/usr/bin/sudo /usr/local/bin/docker-compose down
+
+[Install]
+WantedBy=multi-user.target

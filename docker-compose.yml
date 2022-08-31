@@ -1,0 +1,35 @@
+version: "3.9"
+services:
+  db:
+    image: postgres
+    container_name: db
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypass
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - .:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U myuser -d mydb" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    restart: unless-stopped
+
+  app:
+    image: 'yandex-backend-task.jar'
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - HOST=db
+      - PORT=5432
+      - NAME=mydb
+      - USER=myuser
+      - PASS=mypass
